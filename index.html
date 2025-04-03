@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>独立开发者导航站</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-bg: #f8f9fa;
+            --dark-bg: #212529;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-transform: translateY(-5px);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: var(--hover-transform);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .card-text {
+            color: #666;
+        }
+        
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .link-card {
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color);
+        }
+        
+        .link-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .link-url {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            word-break: break-all;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .search-input {
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .tab-content {
+            padding-top: 2rem;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #495057;
+            font-weight: 500;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 0.75rem 1rem;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .nav-tabs .nav-link:hover:not(.active) {
+            border-color: transparent;
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>独立开发者导航站</h1>
+            <p>为独立开发者提供从需求收集、关键词调研到网站开发的一站式资源导航</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-box">
+            <input type="text" class="form-control search-input" id="searchInput" placeholder="搜索资源...">
+        </div>
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="research-tab" data-bs-toggle="tab" data-bs-target="#research" type="button" role="tab" aria-controls="research" aria-selected="true">需求收集与关键词调研</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="essential-tab" data-bs-toggle="tab" data-bs-target="#essential" type="button" role="tab" aria-controls="essential" aria-selected="false">上站必备工具</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="competitor-tab" data-bs-toggle="tab" data-bs-target="#competitor" type="button" role="tab" aria-controls="competitor" aria-selected="false">竞品调研</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="templates-tab" data-bs-toggle="tab" data-bs-target="#templates" type="button" role="tab" aria-controls="templates" aria-selected="false">网站模板</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab" aria-controls="resources" aria-selected="false">学习资源</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- 需求收集与关键词调研 -->
+            <div class="tab-pane fade show active" id="research" role="tabpanel" aria-labelledby="research-tab">
+                <h2 class="section-title">需求收集与关键词调研</h2>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Search Suggest Tips</h3>
+                            <p class="link-description">查询谷歌下拉词的工具，帮助发现用户搜索意图</p>
+                            <div class="mb-2">
+                                <span class="tag">SEO</span>
+                                <span class="tag">关键词</span>
+                            </div>
+                            <a href="https://www.searchsuggest.tips/?keyword=" target="_blank" class="link-url">https://www.searchsuggest.tips/?keyword=</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Toolify AI 榜单</h3>
+                            <p class="link-description">AI工具收入排行榜，了解市场热门AI产品</p>
+                            <div class="mb-2">
+                                <span class="tag">AI工具</span>
+                                <span class="tag">市场分析</span>
+                            </div>
+                            <a href="https://www.toolify.ai/Best-AI-Tools-revenue" target="_blank" class="link-url">https://www.toolify.ai/Best-AI-Tools-revenue</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">There's An AI For That - 需求列表</h3>
+                            <p class="link-description">用户提交的AI工具需求列表，发现市场空白</p>
+                            <div class="mb-2">
+                                <span class="tag">AI需求</span>
+                                <span class="tag">市场机会</span>
+                            </div>
+                            <a href="https://theresanaiforthat.com/requests" target="_blank" class="link-url">https://theresanaiforthat.com/requests</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Ahrefs 关键词难度</h3>
+                            <p class="link-description">评估关键词竞争难度的工具，帮助SEO策略制定</p>
+                            <div class="mb-2">
+                                <span class="tag">SEO</span>
+                                <span class="tag">关键词分析</span>
+                            </div>
+                            <a href="https://ahrefs.com/keyword-difficulty" target="_blank" class="link-url">https://ahrefs.com/keyword-difficulty</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 上站必备工具 -->
+            <div class="tab-pane fade" id="essential" role="tabpanel" aria-labelledby="essential-tab">
+                <h2 class="section-title">上站必备工具</h2>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Lean Domain Search</h3>
+                            <p class="link-description">快速查找可用域名的工具</p>
+                            <div class="mb-2">
+                                <span class="tag">域名查询</span>
+                            </div>
+                            <a href="https://leandomainsearch.com/" target="_blank" class="link-url">https://leandomainsearch.com/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Query Domains</h3>
+                            <p class="link-description">批量域名可用性检查工具</p>
+                            <div class="mb-2">
+                                <span class="tag">域名查询</span>
+                                <span class="tag">批量查询</span>
+                            </div>
+                            <a href="https://query.domains/" target="_blank" class="link-url">https://query.domains/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Instant Domain Search</h3>
+                            <p class="link-description">实时域名搜索工具，结果即时显示</p>
+                            <div class="mb-2">
+                                <span class="tag">域名查询</span>
+                                <span class="tag">实时搜索</span>
+                            </div>
+                            <a href="https://instantdomainsearch.com/?q=" target="_blank" class="link-url">https://instantdomainsearch.com/?q=</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">域名注册服务</h3>
+                            <p class="link-description">推荐的域名注册服务商</p>
+                            <div class="mb-2">
+                                <span class="tag">域名注册</span>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li><a href="https://spaceship.com" target="_blank">spaceship.com</a></li>
+                                <li><a href="https://porkbun.com" target="_blank">porkbun.com</a></li>
+                                <li><a href="https://namecheap.com" target="_blank">namecheap.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">代码与网站托管</h3>
+                            <p class="link-description">推荐的代码托管和网站部署平台</p>
+                            <div class="mb-2">
+                                <span class="tag">代码托管</span>
+                                <span class="tag">网站部署</span>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li><a href="https://github.com" target="_blank">github.com</a></li>
+                                <li><a href="https://cloudflare.com" target="_blank">cloudflare.com</a></li>
+                                <li><a href="https://vercel.com" target="_blank">vercel.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">数据分析后台</h3>
+                            <p class="link-description">网站数据分析和搜索引擎提交工具</p>
+                            <div class="mb-2">
+                                <span class="tag">数据分析</span>
+                                <span class="tag">搜索引擎</span>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li><a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+                                <li><a href="https://analytics.google.com/analytics/web/#" target="_blank">Google Analytics</a></li>
+                                <li><a href="https://www.bing.com/webmasters/submiturl" target="_blank">Bing Webmaster Tools</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 竞品调研 -->
+            <div class="tab-pane fade" id="competitor" role="tabpanel" aria-labelledby="competitor-tab">
+                <h2 class="section-title">竞品调研工具</h2>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">AITDK</h3>
+                            <p class="link-description">查看网站流量和关键词的工具</p>
+                            <div class="mb-2">
+                                <span class="tag">流量分析</span>
+                                <span class="tag">关键词分析</span>
+                            </div>
+                            <a href="https://aitdk.com" target="_blank" class="link-url">https://aitdk.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Ahrefs 免费工具</h3>
+                            <p class="link-description">查看网站外链的免费SEO工具</p>
+                            <div class="mb-2">
+                                <span class="tag">外链分析</span>
+                                <span class="tag">SEO工具</span>
+                            </div>
+                            <a href="https://ahrefs.com/free-seo-tools" target="_blank" class="link-url">https://ahrefs.com/free-seo-tools</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">SEMrush</h3>
+                            <p class="link-description">查看网站关键词和竞争对手分析的工具</p>
+                            <div class="mb-2">
+                                <span class="tag">关键词分析</span>
+                                <span class="tag">竞争对手分析</span>
+                            </div>
+                            <a href="https://semrush.com" target="_blank" class="link-url">https://semrush.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Ahrefs 热门网站</h3>
+                            <p class="link-description">查看当前热门网站趋势的工具</p>
+                            <div class="mb-2">
+                                <span class="tag">网站趋势</span>
+                                <span class="tag">市场分析</span>
+                            </div>
+                            <a href="https://ahrefs.com/websites#trending" target="_blank" class="link-url">https://ahrefs.com/websites#trending</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 网站模板 -->
+            <div class="tab-pane fade" id="templates" role="tabpanel" aria-labelledby="templates-tab">
+                <h2 class="section-title">网站模板</h2>
+                
+                <h3 class="mb-3">通用网站模板</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Rin - 动态博客</h3>
+                            <p class="link-description">基于Cloudflare Pages + Workers + D1 + R2的动态博客</p>
+                            <div class="mb-2">
+                                <span class="tag">博客</span>
+                                <span class="tag">Cloudflare</span>
+                            </div>
+                            <a href="https://github.com/openRin/Rin" target="_blank" class="link-url">https://github.com/openRin/Rin</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Next.js Boilerplate</h3>
+                            <p class="link-description">支持App Router和Page Router的Next.js 15模板</p>
+                            <div class="mb-2">
+                                <span class="tag">Next.js</span>
+                                <span class="tag">模板</span>
+                            </div>
+                            <a href="https://github.com/ixartz/Next-js-Boilerplate" target="_blank" class="link-url">https://github.com/ixartz/Next-js-Boilerplate</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">SaaS Boilerplate</h3>
+                            <p class="link-description">基于Next.js + Tailwind CSS + Shadcn UI + TypeScript的SaaS模板</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">Next.js</span>
+                            </div>
+                            <a href="https://github.com/ixartz/SaaS-Boilerplate" target="_blank" class="link-url">https://github.com/ixartz/SaaS-Boilerplate</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Next.js Landing Page</h3>
+                            <p class="link-description">免费的Next.js着陆页模板</p>
+                            <div class="mb-2">
+                                <span class="tag">着陆页</span>
+                                <span class="tag">Next.js</span>
+                            </div>
+                            <a href="https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template" target="_blank" class="link-url">https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Astro Boilerplate</h3>
+                            <p class="link-description">响应式博客和作品集模板</p>
+                            <div class="mb-2">
+                                <span class="tag">Astro</span>
+                                <span class="tag">博客</span>
+                            </div>
+                            <a href="https://github.com/ixartz/Astro-boilerplate" target="_blank" class="link-url">https://github.com/ixartz/Astro-boilerplate</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Landing Page Boilerplate</h3>
+                            <p class="link-description">多用途着陆页模板，适合各种项目和营销活动</p>
+                            <div class="mb-2">
+                                <span class="tag">着陆页</span>
+                                <span class="tag">营销</span>
+                            </div>
+                            <a href="https://github.com/weijunext/landing-page-boilerplate" target="_blank" class="link-url">https://github.com/weijunext/landing-page-boilerplate</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Viggle AI WebUI</h3>
+                            <p class="link-description">开源的Viggle AI网页客户端</p>
+                            <div class="mb-2">
+                                <span class="tag">AI</span>
+                                <span class="tag">WebUI</span>
+                            </div>
+                            <a href="https://github.com/ai-aigc-studio/Viggle-AI-WebUI" target="_blank" class="link-url">https://github.com/ai-aigc-studio/Viggle-AI-WebUI</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">周刊博客</h3>
+                            <p class="link-description">博客网站模板</p>
+                            <div class="mb-2">
+                                <span class="tag">博客</span>
+                                <span class="tag">周刊</span>
+                            </div>
+                            <a href="https://github.com/weijunext/new-blog" target="_blank" class="link-url">https://github.com/weijunext/new-blog</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Gapis.money</h3>
+                            <p class="link-description">API货币化平台模板</p>
+                            <div class="mb-2">
+                                <span class="tag">API</span>
+                                <span class="tag">货币化</span>
+                            </div>
+                            <a href="https://github.com/weijunext/gapis.money" target="_blank" class="link-url">https://github.com/weijunext/gapis.money</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Hunt Screens</h3>
+                            <p class="link-description">截取Producthunt、YC和Indiehackers上新项目的屏幕截图</p>
+                            <div class="mb-2">
+                                <span class="tag">截图工具</span>
+                                <span class="tag">项目跟踪</span>
+                            </div>
+                            <a href="https://github.com/daimajia/huntscreens" target="_blank" class="link-url">https://github.com/daimajia/huntscreens</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Smart Excel AI</h3>
+                            <p class="link-description">使用ChatGPT生成Excel公式</p>
+                            <div class="mb-2">
+                                <span class="tag">Excel</span>
+                                <span class="tag">AI工具</span>
+                            </div>
+                            <a href="https://github.com/weijunext/smart-excel-ai" target="_blank" class="link-url">https://github.com/weijunext/smart-excel-ai</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">NextJS VPS示例</h3>
+                            <p class="link-description">NextJS在VPS上的部署示例</p>
+                            <div class="mb-2">
+                                <span class="tag">NextJS</span>
+                                <span class="tag">VPS部署</span>
+                            </div>
+                            <a href="https://github.com/ashleyrudland/nextjs_vps" target="_blank" class="link-url">https://github.com/ashleyrudland/nextjs_vps</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mb-3 mt-4">导航站模板</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">FRE123 导航</h3>
+                            <p class="link-description">免费资源共享平台导航，一键搭建导航网站</p>
+                            <div class="mb-2">
+                                <span class="tag">导航站</span>
+                                <span class="tag">资源共享</span>
+                            </div>
+                            <a href="https://github.com/fre123-com/fre123-nav/" target="_blank" class="link-url">https://github.com/fre123-com/fre123-nav/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">OSS Gallery</h3>
+                            <p class="link-description">互联网上最佳开源项目的众包列表</p>
+                            <div class="mb-2">
+                                <span class="tag">开源项目</span>
+                                <span class="tag">资源列表</span>
+                            </div>
+                            <a href="https://github.com/dubinc/oss-gallery?ref=ossgallery" target="_blank" class="link-url">https://github.com/dubinc/oss-gallery?ref=ossgallery</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">WebStack</h3>
+                            <p class="link-description">静态响应式网址导航网站</p>
+                            <div class="mb-2">
+                                <span class="tag">导航站</span>
+                                <span class="tag">响应式</span>
+                            </div>
+                            <a href="https://github.com/WebStackPage/WebStackPage.github.io" target="_blank" class="link-url">https://github.com/WebStackPage/WebStackPage.github.io</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Tap4 AI WebUI</h3>
+                            <p class="link-description">一键部署AI工具目录的开源Web UI</p>
+                            <div class="mb-2">
+                                <span class="tag">AI工具</span>
+                                <span class="tag">目录</span>
+                            </div>
+                            <a href="https://github.com/6677-ai/tap4-ai-webui" target="_blank" class="link-url">https://github.com/6677-ai/tap4-ai-webui</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">GPTs Works</h3>
+                            <p class="link-description">第三方GPTs商店</p>
+                            <div class="mb-2">
+                                <span class="tag">GPTs</span>
+                                <span class="tag">AI工具</span>
+                            </div>
+                            <a href="https://github.com/all-in-aigc/gpts-works" target="_blank" class="link-url">https://github.com/all-in-aigc/gpts-works</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">UI 库集合</h3>
+                            <p class="link-description">精选的UI库和组件集合</p>
+                            <div class="mb-2">
+                                <span class="tag">UI库</span>
+                                <span class="tag">组件</span>
+                            </div>
+                            <a href="https://github.com/ddahan/ui-libs" target="_blank" class="link-url">https://github.com/ddahan/ui-libs</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mb-3 mt-4">SaaS模板</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Open SaaS</h3>
+                            <p class="link-description">开源SaaS启动模板</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">开源</span>
+                            </div>
+                            <a href="https://github.com/wasp-lang/open-saas/" target="_blank" class="link-url">https://github.com/wasp-lang/open-saas/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">JustShip</h3>
+                            <p class="link-description">快速构建SaaS产品的模板</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">快速开发</span>
+                            </div>
+                            <a href="https://github.com/ocluf/justship" target="_blank" class="link-url">https://github.com/ocluf/justship</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Supanuxt SaaS</h3>
+                            <p class="link-description">基于Supabase和Nuxt的SaaS启动模板</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">Supabase</span>
+                                <span class="tag">Nuxt</span>
+                            </div>
+                            <a href="https://github.com/JavascriptMick/supanuxt-saas" target="_blank" class="link-url">https://github.com/JavascriptMick/supanuxt-saas</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">SaaSFly</h3>
+                            <p class="link-description">现代SaaS应用程序启动模板</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">现代应用</span>
+                            </div>
+                            <a href="https://github.com/saasfly/saasfly" target="_blank" class="link-url">https://github.com/saasfly/saasfly</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">XLike Web</h3>
+                            <p class="link-description">类似Twitter的社交网络应用</p>
+                            <div class="mb-2">
+                                <span class="tag">社交网络</span>
+                                <span class="tag">Twitter克隆</span>
+                            </div>
+                            <a href="https://github.com/mundane799699/xlike-web" target="_blank" class="link-url">https://github.com/mundane799699/xlike-web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习资源 -->
+            <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
+                <h2 class="section-title">学习资源</h2>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Google 创建有用内容指南</h3>
+                            <p class="link-description">Google官方SEO内容创建指南</p>
+                            <div class="mb-2">
+                                <span class="tag">SEO</span>
+                                <span class="tag">内容创作</span>
+                            </div>
+                            <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content?hl=zh-cn" target="_blank" class="link-url">https://developers.google.com/search/docs/fundamentals/creating-helpful-content?hl=zh-cn</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Vercel 模板库</h3>
+                            <p class="link-description">Vercel官方提供的各种网站模板</p>
+                            <div class="mb-2">
+                                <span class="tag">模板</span>
+                                <span class="tag">Vercel</span>
+                            </div>
+                            <a href="https://vercel.com/templates" target="_blank" class="link-url">https://vercel.com/templates</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Reddit 资源集合</h3>
+                            <p class="link-description">Reddit上有关独立开发的资源集合</p>
+                            <div class="mb-2">
+                                <span class="tag">Reddit</span>
+                                <span class="tag">资源集合</span>
+                            </div>
+                            <a href="https://liberating-doll-b8a.notion.site/Reddit-1a8e8aed91b18021839ecba8b74e530b" target="_blank" class="link-url">https://liberating-doll-b8a.notion.site/Reddit-1a8e8aed91b18021839ecba8b74e530b</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">AI短视频市场概览</h3>
+                            <p class="link-description">AI短视频市场数据和分析</p>
+                            <div class="mb-2">
+                                <span class="tag">AI</span>
+                                <span class="tag">短视频</span>
+                                <span class="tag">市场分析</span>
+                            </div>
+                            <a href="https://docs.google.com/spreadsheets/d/1QOdqq9KbjQj1JZO43vc1pir2rnEEsMUXzTDATrOCn2k/edit?gid=0#gid=0" target="_blank" class="link-url">https://docs.google.com/spreadsheets/d/1QOdqq9KbjQj1JZO43vc1pir2rnEEsMUXzTDATrOCn2k/edit?gid=0#gid=0</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">独立创业者报告</h3>
+                            <p class="link-description">独立创业者数据和分析报告</p>
+                            <div class="mb-2">
+                                <span class="tag">独立创业</span>
+                                <span class="tag">数据报告</span>
+                            </div>
+                            <a href="https://docs.google.com/spreadsheets/d/1eUni44pIURML2VWFFXKzNmm-WKuuam9_ynr5Fo_Q74M/edit?gid=83151001#gid=83151001" target="_blank" class="link-url">https://docs.google.com/spreadsheets/d/1eUni44pIURML2VWFFXKzNmm-WKuuam9_ynr5Fo_Q74M/edit?gid=83151001#gid=83151001</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">500MRR</h3>
+                            <p class="link-description">月收入500美元的SaaS项目案例分享</p>
+                            <div class="mb-2">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">收入案例</span>
+                            </div>
+                            <a href="https://www.500mrr.com/" target="_blank" class="link-url">https://www.500mrr.com/</a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="link-card">
+                            <h3 class="link-title">Hacker News 讨论</h3>
+                            <p class="link-description">Hacker News上关于独立开发的讨论</p>
+                            <div class="mb-2">
+                                <span class="tag">Hacker News</span>
+                                <span class="tag">讨论</span>
+                            </div>
+                            <a href="https://news.ycombinator.com/item?id=42373343" target="_blank" class="link-url">https://news.ycombinator.com/item?id=42373343</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 独立开发者导航站 | 为独立开发者提供有价值的资源</p>
+            <p>如有建议或合作，请联系：<a href="mailto:contact@example.com">contact@example.com</a></p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const linkCards = document.querySelectorAll('.link-card');
+            
+            linkCards.forEach(card => {
+                const title = card.querySelector('.link-title').textContent.toLowerCase();
+                const description = card.querySelector('.link-description').textContent.toLowerCase();
+                const url = card.querySelector('.link-url').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                
+                if (title.includes(searchTerm) || 
+                    description.includes(searchTerm) || 
+                    url.includes(searchTerm) ||
+                    tags.some(tag => tag.includes(searchTerm))) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
